@@ -54,10 +54,12 @@ impl State {
 			bv
 		}
 	}
-	/// returns what's in the cell (X, O, or empty) in u8 (1, 2, 0)
-	pub fn get(&self, idx: usize) -> u8 {
-		(*self.info.get(idx * 2 + 1).get_or_insert(false) as u8) * 2
-			+ (*self.info.get(idx * 2).get_or_insert(false) as u8)
+	/// returns what's in the cell (X, O, or empty) in usize (1, 2, or 0)
+	/// every cell is 2 bits
+	/// get(0) to get turn
+	pub fn get(&self, idx: usize) -> usize {
+		(*self.info.get(idx * 2 + 1).get_or_insert(false) as usize) * 2
+			+ (*self.info.get(idx * 2).get_or_insert(false) as usize)
 	}
 	/// pass the turn to the other
 	pub fn switch_turn(&mut self) {

@@ -21,12 +21,21 @@ fn main() {
 				engine.state.update(b, t);
 			}
 			Some(InputType::MoveRequest) => {
-				let best_move = engine.get_best_move(0);
-				println!("{:?}", best_move.0);
+				let best_move = engine.get_best_move();
+				println!("{:?}", best_move);
 			}
 			Some(InputType::EvalRequest) => {
-				let w = engine.evaluate_state(0);
+				let mut best_move = 0;
+				let mut alpha = &mut isize::MIN;
+				let mut beta = &mut isize::MAX;
+				let w = engine.evaluate_state(
+					0,
+					&mut best_move,
+					&mut alpha,
+					&mut beta,
+				);
 				println!("{:?}", w);
+				println!("{} {} {}", best_move, alpha, beta);
 			}
 			None => {}
 		}
