@@ -26,13 +26,13 @@ fn main() {
 			}
 			Some(InputType::EvalRequest) => {
 				let mut best_move = 0;
-				let mut alpha = &mut isize::MIN;
-				let mut beta = &mut isize::MAX;
+				let alpha = isize::MIN;
+				let beta = isize::MAX;
 				let w = engine.evaluate_state(
 					0,
 					&mut best_move,
-					&mut alpha,
-					&mut beta,
+					alpha,
+					beta,
 				);
 				println!("{:?}", w);
 				println!("{} {} {}", best_move, alpha, beta);
