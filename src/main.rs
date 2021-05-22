@@ -28,14 +28,12 @@ fn main() {
 				let mut best_move = 0;
 				let alpha = isize::MIN;
 				let beta = isize::MAX;
-				let w = engine.evaluate_state(
-					0,
-					&mut best_move,
-					alpha,
-					beta,
-				);
+				let w = engine.evaluate_state(0, &mut best_move, alpha, beta);
 				println!("{:?}", w);
 				println!("{} {} {}", best_move, alpha, beta);
+			}
+			Some(InputType::QuitRequest) => {
+				break;
 			}
 			None => {}
 		}

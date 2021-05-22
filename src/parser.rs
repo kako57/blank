@@ -4,6 +4,7 @@ pub enum InputType {
 	StateRequest(Vec<char>, char),
 	MoveRequest,
 	EvalRequest,
+	QuitRequest,
 }
 
 pub struct Parser {
@@ -55,6 +56,7 @@ impl Parser {
 				}
 				"move" => Some(InputType::MoveRequest),
 				"eval" => Some(InputType::EvalRequest),
+				"quit" => Some(InputType::QuitRequest),
 				_ => None,
 			}
 		}

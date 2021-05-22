@@ -1,5 +1,4 @@
 use crate::State;
-use std::collections::HashMap;
 
 pub struct Engine {
 	/// current state that the engine stores
@@ -7,9 +6,6 @@ pub struct Engine {
 	/// the state will be used for evaluation or finding the best move,
 	/// respectively.
 	pub state: State,
-	/// table to save states and their evaluations
-	/// State -> eval
-	table: HashMap<State, usize>,
 }
 
 impl Engine {
@@ -17,7 +13,6 @@ impl Engine {
 	pub fn new() -> Self {
 		Engine {
 			state: State::new(),
-			table: HashMap::new(),
 		}
 	}
 	/// checks for wins
@@ -53,8 +48,6 @@ impl Engine {
 		mut beta: isize,
 	) -> isize {
 		let check_win = self.is_win_state();
-		let cur_turn = self.state.get(0);
-		let prev_turn = cur_turn ^ 0b11;
 		if check_win > 0 {
 			if depth & 1 == 1 {
 				return 20 - depth;
@@ -79,45 +72,32 @@ impl Engine {
 		if depth & 1 == 1 {
 			for cur_move in available_moves {
 				self.state.set(cur_move);
-				result = self.evaluate_state(
-					depth,
-					&mut best_move,
-					alpha,
-					beta,
-				);
+				result =
+					self.evaluate_state(depth, &mut best_move, alpha, beta);
 				self.state.unset(cur_move);
 				if result > alpha {
 					alpha = result;
 					if depth == 1 {
-						println!("{}", result);
 						*best_move = cur_move;
 					}
 				} else if alpha >= beta {
 					return alpha;
 				}
 			}
-			return alpha;
+			alpha
 		} else {
 			for cur_move in available_moves {
 				self.state.set(cur_move);
-				result = self.evaluate_state(
-					depth,
-					&mut best_move,
-					alpha,
-					beta,
-				);
+				result =
+					self.evaluate_state(depth, &mut best_move, alpha, beta);
 				self.state.unset(cur_move);
 				if result < beta {
 					beta = result;
-					if depth == 1 {
-						eprintln!("reached");
-						*best_move = cur_move;
-					}
 				} else if beta <= alpha {
 					return beta;
 				}
 			}
-			return beta;
+			beta
 		}
 	}
 	/// gets best move for the current state in engine
