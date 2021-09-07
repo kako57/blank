@@ -47,9 +47,9 @@ impl Engine {
         let check_win = self.is_win_state();
         if check_win > 0 {
             if depth & 1 == 1 {
-                return 20 - depth;
+                return 15 - depth;
             } else {
-                return depth - 20;
+                return depth - 15;
             }
         }
         let available_moves = {
