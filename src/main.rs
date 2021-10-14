@@ -17,14 +17,14 @@ fn main() {
         }
         let result = parser.parse_input();
         match result {
-            Some(InputType::StateRequest(b, t)) => {
+            Some(InputType::State(b, t)) => {
                 engine.state.update(b, t);
             }
-            Some(InputType::MoveRequest) => {
+            Some(InputType::Move) => {
                 let best_move = engine.get_best_move();
                 println!("{:?}", best_move);
             }
-            Some(InputType::EvalRequest) => {
+            Some(InputType::Eval) => {
                 let mut best_move = 0;
                 let alpha = isize::MIN;
                 let beta = isize::MAX;
@@ -32,7 +32,7 @@ fn main() {
                 println!("{:?}", w);
                 println!("{} {} {}", best_move, alpha, beta);
             }
-            Some(InputType::QuitRequest) => {
+            Some(InputType::Quit) => {
                 break;
             }
             None => {}

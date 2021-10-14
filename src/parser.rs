@@ -1,10 +1,10 @@
 use std::io;
 
 pub enum InputType {
-    StateRequest(Vec<char>, char),
-    MoveRequest,
-    EvalRequest,
-    QuitRequest,
+    State(Vec<char>, char),
+    Move,
+    Eval,
+    Quit,
 }
 
 pub struct Parser {
@@ -51,11 +51,11 @@ impl Parser {
                         'x' | 'o' => {}
                         _ => return None,
                     }
-                    Some(InputType::StateRequest(board, turn))
+                    Some(InputType::State(board, turn))
                 }
-                "move" => Some(InputType::MoveRequest),
-                "eval" => Some(InputType::EvalRequest),
-                "quit" => Some(InputType::QuitRequest),
+                "move" => Some(InputType::Move),
+                "eval" => Some(InputType::Eval),
+                "quit" => Some(InputType::Quit),
                 _ => None,
             }
         }

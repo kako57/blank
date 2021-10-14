@@ -40,7 +40,7 @@ impl Engine {
     pub fn evaluate_state(
         &mut self,
         depth: isize,
-        mut best_move: &mut usize,
+        best_move: &mut usize,
         mut alpha: isize,
         mut beta: isize,
     ) -> isize {
@@ -69,7 +69,7 @@ impl Engine {
         if depth & 1 == 1 {
             for cur_move in available_moves {
                 self.state.set(cur_move);
-                result = self.evaluate_state(depth, &mut best_move, alpha, beta);
+                result = self.evaluate_state(depth, best_move, alpha, beta);
                 self.state.unset(cur_move);
                 if result > alpha {
                     alpha = result;
@@ -84,7 +84,7 @@ impl Engine {
         } else {
             for cur_move in available_moves {
                 self.state.set(cur_move);
-                result = self.evaluate_state(depth, &mut best_move, alpha, beta);
+                result = self.evaluate_state(depth, best_move, alpha, beta);
                 self.state.unset(cur_move);
                 if result < beta {
                     beta = result;
